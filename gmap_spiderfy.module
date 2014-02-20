@@ -39,7 +39,8 @@ function _gmap_spiderfy_gmap_pre_render($element) {
     if (isset($element['#gmap_settings']['behavior']['spiderfy']) && $element['#gmap_settings']['behavior']['spiderfy'] == TRUE) {
         // We need to Spiderfy - include our custom JS
         $path = drupal_get_path('module', 'gmap_spiderfy');
-        unset($element['#attached']['js']['sites/all/modules/contrib/gmap/js/gmap_marker.js']);
+        $gmap_path = drupal_get_path('module', 'gmap');
+        unset($element['#attached']['js'][$gmap_path .'/js/gmap_marker.js']);
         $element['#attached']['js'][$path . '/js/oms.js'] = array('weight' => 2);
         $element['#attached']['js'][$path . '/js/nlt_gmap_marker.js'] = array('weight' => 5);
     }
