@@ -1,0 +1,47 @@
+<?php
+
+/**
+ * implements hook_gmap
+ * Define a new behavior for spiderying markers
+ *
+ */
+
+function gmap_spiderfy_gmap($op, &$map) {
+    switch ($op) {
+        case 'behaviors':
+            return array(
+                'spiderfy' => array(
+                    'title' => t('Spiderfy Overlapping Markers'),
+                    'default' => FALSE,
+                    'help' => t('Displays groups of markers that are very close to each other more easily.'),
+                ),
+            );
+            break;
+    }
+}
+
+/**
+ * implements hook_element_info_alter
+ */
+
+function gmap_spiderfy_element_info_alter(&$type) {
+    if (isset($type['gmap'])) {
+        $type['gmap']['#pre_render'][50] = '_gmap_spiderfy_gmap_pre_render';
+    }
+}
+
+
+/**
+ * Custom render callback for hook_element_info_alter
+ */
+
+function _gmap_spiderfy_gmap_pre_render($element) {
+    if (isset($element['#gmap_settings']['behavior']['spiderfy']) && $element['#gmap_settings']['behavior']['spiderfy'] == TRUE) {
+        // We need to Spiderfy - include our custom JS
+        $path = drupal_get_path('module', 'gmap_spiderfy');
+        unset($element['#attached']['js']['sites/all/modules/contrib/gmap/js/gmap_marker.js']);
+        $element['#attached']['js'][$path . '/js/oms.js'] = array('weight' => 2);
+        $element['#attached']['js'][$path . '/js/nlt_gmap_marker.js'] = array('weight' => 5);
+    }
+    return $element;
+}

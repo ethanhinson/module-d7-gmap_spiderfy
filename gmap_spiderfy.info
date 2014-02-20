@@ -1,0 +1,7 @@
+name = Gmap Spiderfy
+description = Uses OverlappingMarkerSpiderfier library to display points close to each other.
+core = 7.x
+package = Location
+version = 7.x-1.0-dev
+project = gmap_spiderfy
+dependencies[] = gmap
