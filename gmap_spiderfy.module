@@ -42,7 +42,7 @@ function _gmap_spiderfy_gmap_pre_render($element) {
         $gmap_path = drupal_get_path('module', 'gmap');
         unset($element['#attached']['js'][$gmap_path .'/js/gmap_marker.js']);
         $element['#attached']['js'][$path . '/js/oms.js'] = array('weight' => 2);
-        $element['#attached']['js'][$path . '/js/nlt_gmap_marker.js'] = array('weight' => 5);
+        $element['#attached']['js'][$path . '/js/gs_gmap_marker.js'] = array('weight' => 5);
     }
     return $element;
 }
